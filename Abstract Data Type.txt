@@ -1,0 +1,111 @@
+CREATE OR REPLACE TYPE address AS OBJECT 
+( street varchar(60), 
+    city varchar(50), 
+    state varchar(50), 
+    zip int 
+);
+Type created.
+
+
+CREATE table person 
+( fisrt_name varchar(50), 
+    last_name varchar(50), 
+    full_address address 
+)
+Table created.
+
+
+INSERT INTO person values('OM','AWASARE',address('SHIRGAON','RATNAGIRI','MH',415612))
+INSERT INTO person values('CHANDAN','HOWALE',address('MIRJOLE','RATNAGIRI','MH',415639))
+INSERT INTO person values('DHRUV','PATEL',address('NACHANE','RATNAGIRI','MH',415627))
+INSERT INTO person values('NITANT','DEULKAR',address('MARUTIMANDIR','RATNAGIRI','MH',415629))
+INSERT INTO person values('BHAVESH','CHOUGULE',address('RAJAPUR','RATNAGIRI','MH',415630))
+
+
+SELECT * from person
+
+SELECT last_name, p.full_address.zip, p.full_address.city, p.full_address.street from person p
+
+
+SELECT fisrt_name, last_name, p.full_address.zip, p.full_address.city, p.full_address.street from person p
+
+
+SELECT fisrt_name, last_name, p.full_address.zip, p.full_address.city, p.full_address.street, p.full_address.state from person p
+
+
+======================================================================================================================================
+
+
+CREATE TYPE student AS object 
+( name varchar2(30), 
+    address varchar(50), 
+    gender char(20), 
+    phone varchar(20) 
+);
+Type created.
+
+
+CREATE TABLE student_table OF student
+
+
+INSERT INTO student_table VALUES('OM','RATNAGIRI','MALE','4561239870')
+INSERT INTO student_table VALUES('CHANDAN','MIRJOLE','MALE','6521489870')
+INSERT INTO student_table VALUES('DHRUV','NACHANE','MALE','9625439870')
+INSERT INTO student_table VALUES('INDRANIL','MIDC','MALE','8652439870')
+INSERT INTO student_table VALUES('NITANT','SAWANTWADI','MALE','8452239870')
+
+
+SELECT * FROM student_table
+
+================================================================================================================================
+
+
+CREATE TYPE employeeT AS OBJECT 
+( name varchar2(30), 
+   ssn varchar2(15), 
+    salary number, 
+    member function raise_sal return number);
+Type created.
+
+
+CREATE TYPE BODY employeeT AS MEMBER FUNCTION raise_sal return number is 
+	BEGIN 
+    	RETURN salary*2; 
+	END; 
+END;
+Type created.
+
+
+CREATE TABLE emp2 of employeeT
+
+
+insert into emp2 values (employeeT('FRANK','12345',1000))
+insert into emp2 values (employeeT('OM','12515',5000))
+insert into emp2 values (employeeT('CHANDAN','12440',4000))
+insert into emp2 values (employeeT('DHRUV','12345',3000))
+
+
+select * from emp2
+
+
+SELECT e.raise_sal() from emp2 e
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

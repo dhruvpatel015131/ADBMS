@@ -1,0 +1,109 @@
+create type emp as object 
+( eid number, 
+  ename varchar2(10),  
+  emp_addr varchar2(10),  
+  doj date, 
+  salary number, 
+  MEMBER FUNCTION cal_sal RETURN number) not final;
+Type created.
+
+
+create type body emp as 
+	MEMBER FUNCTION cal_sal RETURN number is 
+	BEGIN 
+		RETURN salary; 
+	END; 
+END;
+Type created.
+
+
+create table  employee of emp
+
+
+
+insert into employee values (emp(10, 'Om', 'Shirgaon', '22-Sep-2009', 50000))
+insert into employee values (emp(11, 'Dhruv', 'Nachane', '13-Jul-2010', 40000))
+insert into employee values (emp(12, 'Chandan', 'Majgaon', '26-Nov-2008', 45000))
+insert into employee values (emp(13, 'Indranil', 'Ratnagiri', '15-Jun-2009', 42500))
+
+
+select * from employee
+
+
+select e.cal_sal() from  employee e
+
+========================================================================================================
+
+create type eng under emp 
+( eng_type varchar2(10), 
+    MEMBER FUNCTION emp_type RETURN varchar2);
+Type created.
+
+
+create type body eng as 
+	MEMBER FUNCTION emp_type RETURN varchar2 is 
+	BEGIN 
+		RETURN 'Engineer'; 
+	END; 
+END;
+Type created.
+
+CREATE TABLE engineer of eng
+
+
+insert into engineer values(20, 'Om', 'Ratnagiri', '12-Dec-2009', 55000, 'senior')
+insert into engineer values(21, 'Raj', 'Rajapur', '16-Jan-2008', 45000, 'senior')
+
+select * from engineer
+
+
+select e.cal_sal() from engineer e
+
+
+select e.emp_type() from engineer e
+
+
+====================================================================================================================
+
+create type theater_t as object 
+( tno number(4), 
+  tname varchar2(20), 
+  address varchar2(20), 
+  phone number(10));
+Type created.
+
+
+create table Theaters of theater_t
+
+
+insert into Theaters values(1, 'CityPride', 'KCNagar', 223344)
+insert into Theaters values(2, 'IMAX', 'MGRoad', 224455)
+insert into Theaters values(3, 'PVR', 'RTNagar', 324455)
+insert into Theaters values(4, 'INOX', 'NWRoad', 324655)
+
+
+create table Nowshowing 
+( movie_id number(4), 
+    theater REF theater_t SCOPE is Theaters, 
+    mstart date, 
+    mend date)
+Table created.
+
+
+
+insert into Nowshowing values(1, (select ref(t) from Theaters t where t.tno=1), '06-Apr-2023', '12-Apr-2023')
+insert into Nowshowing values(2, (select ref(t) from Theaters t where t.tno=2), '06-May-2023', '12-May-2023')
+insert into Nowshowing values(3, (select ref(t) from Theaters t where t.tno=3), '16-Apr-2023', '23-Apr-2023')
+insert into Nowshowing values(4, (select ref(t) from Theaters t where t.tno=4), '11-Jun-2023', '18-Jun-2023')
+
+
+select n.movie_id, n.theater.tname from Nowshowing n
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,126 @@
+create table loc(loc_key int primary key, state varchar(25), city varchar(25),country varchar(25))
+Table created.
+
+create table items(item_key int primary key, item_name varchar(25), item_category varchar(25), color varchar(20))
+Table created.
+
+create table sTime(time_key date primary key, sdate date, week varchar(30), smonth varchar(30), quarter varchar(25), syear int)
+Table created.
+
+
+create table salesfact(loc_key int, item_key int, time_key date, units_sold int,  
+    FOREIGN KEY(loc_key)references loc(loc_key), 
+    FOREIGN KEY(item_key)references items(item_key), 
+    FOREIGN KEY(time_key)references sTime(time_key))
+Table created.
+
+INSERT INTO loc VALUES(1,'Southlake','Texas','US')
+INSERT INTO loc VALUES(2,'Houston','Texas','US')
+INSERT INTO loc VALUES(3,'Los Angeles','California','US')
+INSERT INTO loc VALUES(4,'Oakland','California','US')
+INSERT INTO loc VALUES(5,'Algoma','Ontario','Canada')
+INSERT INTO loc VALUES(6,'Bemont','Ontario','Canada')
+INSERT INTO loc VALUES(7,'Devon','Alberta','Canada')
+INSERT INTO loc VALUES(8,'Fairview','Alberta','Canada')
+INSERT INTO loc VALUES(9,'Ratnagiri','Maharashtra','India')
+INSERT INTO loc VALUES(10,'Mumbai','Maharashtra','India')
+INSERT INTO loc VALUES(11,'Cochin','Kerala','India')
+INSERT INTO loc VALUES(12,'Adur','Kerala','India')
+INSERT INTO loc VALUES(13,'Brisbane','Queensland','Australia')
+INSERT INTO loc VALUES(14,'Sydney','NewSouthWales','Australia')
+
+
+insert into items values(1101,'GoProHero','Camera','black')
+insert into items values(1102,'GoProHero','Camera','grey')
+insert into items values(1103,'CanonEOS1500','Camera','black')
+insert into items values(1104,'Powershot','Camera','black')
+insert into items values(1105,'BoatRockerz255','Headphone','black')
+insert into items values(1106,'PTron','Headphone','blue')
+
+
+Insert into Stime(time_key,sdate,week,month,quarter,syear) 
+select TIME_ID,TIME_ID,CALENDAR_WEEK_NUMBER,CALENDAR_MONTH_NUMBER,CALENDAR_QUARTER_NUMBER,CALENDAR_YEAR from SH.TIMES
+
+
+insert into salesfact values(2,1101,'02-Jan-98',10)
+insert into salesfact values(3,1102,'03-Jan-98',20)
+insert into salesfact values(4,1103,'04-Jan-98',20)
+insert into salesfact values(5,1104,'05-Jan-98',30)
+insert into salesfact values(6,1105,'06-Jan-98',30)
+insert into salesfact values(7,1106,'07-Jan-98',40)
+insert into salesfact values(7,1111,'11-Dec-98',20)
+insert into salesfact values(8,1112,'12-Dec-98',20)
+
+
+
+select i.item_name, l.city, t.quarter, sum(s.units_sold) from salesfact s 
+left join items i on s.item_key=i.item_key 
+left join loc l on s.loc_key=l.loc_key 
+left join stime t on s.time_key=t.time_key 
+where (i.item_name in('GoProHero','Caravaan2') and l.city in ('Los Angeles','Oakland') and t.quarter in(1,2)) 
+group by (i.item_name, l.city, t.quarter) 
+order by t.quarter
+
+
+select * from items
+
+select * from sTime
+
+
+select i.item_name, l.city, t.quarter, s.units_sold from salesfact s 
+left join items i on s.item_key=i.item_key 
+left join loc l on s.loc_key=l.loc_key 
+left join sTime t on s.time_key=t.time_key 
+where t.quarter=1
+
+
+select l.country, t.quarter, sum(s.units_sold) as country_sales from salesfact s 
+left join items i on s.item_key=i.item_key 
+left join loc l on s.loc_key=l.loc_key 
+left join sTime t on s.time_key=t.time_key 
+group by rollup(l.country, t.quarter)
+
+
+select i.item_name, t.smonth, sum(s.units_sold) as month_sales from salesfact s 
+left join items i on s.item_key=i.item_key 
+left join loc l on s.loc_key=l.loc_key 
+left join sTime t on s.time_key=t.time_key 
+group by (i.item_name, t.smonth) order by t.smonth
+
+
+select i.item_name, t.smonth, sum(s.units_sold) as month_sales from salesfact s 
+left join items i on s.item_key=i.item_key 
+left join loc l on s.loc_key=l.loc_key 
+left join sTime t on s.time_key=t.time_key 
+group by (i.item_name, t.smonth) order by t.smonth asc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

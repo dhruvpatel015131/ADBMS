@@ -1,0 +1,124 @@
+Create table RollupTest1(id int primary key, 
+    name varchar(50), 
+    gender varchar(20), 
+    salary int, 
+    department varchar(50))
+Table created.
+
+
+insert into RollupTest1 values(1,'pranay','male',10000,'IT')
+insert into RollupTest1 values(2,'Ankit','male',20000,'HR')
+insert into RollupTest1 values(3,'Ashish','male',30000,'IT')
+insert into RollupTest1 values(4,'pranali','female',35000,'Marketing')
+insert into RollupTest1 values(5,'prajakta','female',15000,'Sales')
+insert into RollupTest1 values(9,'Raj','male',50000,'finance')
+
+
+select department, sum(salary) from RollupTest1 Group by rollup (department)
+
+
+DEPARTMENT	SUM(SALARY)
+HR	55000
+IT	80000
+Marketing	70000
+Sales	33000
+finance	75000
+-	313000
+
+
+select coalesce(department, 'Total'),sum(salary) from RollupTest1 Group by rollup (department)
+
+
+COALESCE(DEPARTMENT,'TOTAL')	SUM(SALARY)
+HR	55000
+IT	80000
+Marketing	70000
+Sales	33000
+finance	75000
+Total	313000
+
+
+select coalesce(department, 'Total'),sum(salary) from RollupTest1 Group by rollup (department,gender)
+
+
+select coalesce(gender,'Total'),sum(salary) from RollupTest1 Group by rollup (gender)
+
+
+select coalesce(department,'Total'),coalesce(gender,'Total'),sum(salary) from RollupTest1 Group by rollup (department,gender)
+
+
+select avg(salary) from RollupTest1
+
+
+select department,avg(salary) from RollupTest1 group by (department)
+
+
+select coalesce(department,'Total'),coalesce(gender,'Total'),sum(salary) from RollupTest1 Group by cube (department,gender)
+
+
+select coalesce(gender,'Total'),sum(salary) from RollupTest1 Group by cube (gender)
+
+
+select coalesce(department,'Total'),coalesce(name,'Total'),sum(salary) from RollupTest1 Group by cube (department,name)
+
+=========================================================================================================================================
+
+create table emp1( 
+    empno number(4,0), 
+    ename varchar2(10), 
+    job varchar2(9), 
+    mgr number(4,0), 
+    hiredate date, 
+    sal number(7,2), 
+    comm number(7,2), 
+    deptno number(2,0), 
+    constraint pk_emp primary key(empno), 
+    constraint fk_deptno foreign key(deptno) references dept (deptno) 
+)
+
+
+insert into dept values(1,'IT','Ratnagiri')
+insert into dept values(2,'HR','Mumbai')
+insert into dept values(3,'Sales','Goa')
+insert into dept values(4,'Finance','Ratnagiri')
+
+
+
+insert into emp1 values(101,'Jones','Manager',11,to_date('02-04-1981','dd-mm-yyyy'),3000,null,1)
+insert into emp1 values(102,'Jay','Manager',11,to_date('02-06-1989','dd-mm-yyyy'),3000,null,2)
+insert into emp1 values(103,'Virat','Manager',11,to_date('12-04-1994','dd-mm-yyyy'),3500,null,3)
+insert into emp1 values(104,'Rohit','Manager',11,to_date('06-07-2001','dd-mm-yyyy'),5000,null,1)
+insert into emp1 values(105,'Kunal','Manager',11,to_date('02-05-2003','dd-mm-yyyy'),37500,null,4)
+insert into emp1 values(106,'Kushal','Manager',11,to_date('02-08-2001','dd-mm-yyyy'),3700,null,4)
+
+
+select * from dept
+
+
+select avg(sal) from emp1
+
+
+select empno, deptno, sal, avg(sal) over (partition by deptno) as avg_dept_sal from emp1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

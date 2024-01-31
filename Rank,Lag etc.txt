@@ -1,0 +1,150 @@
+create table emp(empid int primary key, 
+    empname varchar(30), 
+    deptid int, 
+    salary int)
+Table created.
+
+
+insert into emp values(1,'Ankit',100,13000)
+insert into emp values(2,'Mohit',200,17000)
+insert into emp values(3,'Vikas',200,15000)
+insert into emp values(4,'Rohit',100,10000)
+insert into emp values(5,'Virat',200,13000)
+insert into emp values(6,'Shubhman',100,17000)
+insert into emp values(7,'Raj',200,19000)
+insert into emp values(8,'Dinesh',100,12000)
+
+
+select * from emp
+
+
+select empid,empname,deptid,salary,rank() over(order by salary desc) as rank from emp
+
+
+select empid,empname,deptid,salary,rank() over(order by salary desc) as rank, 
+dense_rank() over(order by salary desc) as dense_rank from emp
+
+
+select empid,empname,deptid,salary,rank() over(order by salary desc) as rank, 
+dense_rank() over(order by salary desc) as dense_rank, 
+row_number() over(partition by deptid order by salary desc) as row_no from emp
+
+
+select * from(select empid, empname, deptid, salary, 
+    rank() over(partition by deptid order by salary desc) as rank 
+    from emp a) where rank=1
+
+
+select empid, empname, deptid, salary, ntile(3) over(order by salary desc) as ntile from emp
+
+
+===========================================================================================================
+
+
+create table employeeSales1(empid int, 
+    dept int, 
+    product_id int, 
+    qty int, 
+    sales int, 
+    sales_year int)
+Table created.
+
+
+insert into employeeSales1 values(101,1,1,21,150,2001)
+insert into employeeSales1 values(102,2,3,34,345,2003)
+insert into employeeSales1 values(103,2,2,43,601,2002)
+insert into employeeSales1 values(104,3,3,29,1562,2004)
+insert into employeeSales1 values(105,1,1,37,289,2005)
+insert into employeeSales1 values(106,3,2,44,2115,2001)
+insert into employeeSales1 values(107,2,3,49,489,2004)
+insert into employeeSales1 values(108,1,2,31,550,2006)
+insert into employeeSales1 values(109,3,1,41,732,2007)
+row(s) inserted.
+
+
+select * from employeeSales1
+
+
+select dept,sum(sales) from employeeSales1 group by dept
+
+
+select empid,product_id,sum(sales) over() as Total_Sales from employeeSales1
+
+
+select empid,product_id,avg(sales) over() as avg_Sales from employeeSales1
+
+
+select empid,product_id,dept,sum(sales) over(partition by dept) as Total_Sales from employeeSales1
+
+select empid,product_id,dept,sales_year,sales,Lag(sales) 
+over(order by sales_year asc) as pre_year from employeeSales1
+
+
+select empid,product_id,dept,sales_year,sales,Lead(sales) 
+over(order by sales_year asc) as next_year from employeeSales1
+
+
+select empid,product_id,dept,sales_year,sales,first_value(sales) 
+over(order by sales_year asc) as first_value from employeeSales1
+
+
+select empid,product_id,dept,sales_year,sales,last_value(sales) 
+over(order by sales_year asc) as last_value from employeeSales1
+
+
+select empid,product_id,dept,sales_year,sales,first_value(sales) 
+over() as first_value from employeeSales1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

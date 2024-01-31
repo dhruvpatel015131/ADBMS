@@ -1,0 +1,148 @@
+Statement 1
+create table customers(custcode number(5), 
+cust_name varchar2(20), 
+Address varchar2(20), 
+city varchar2(15), 
+Bal number(10)) 
+ 
+partition by list (city) 
+(partition north values('DELHI','CHANDIGARH'), 
+partition east values('KOLKATA','PATNA'), 
+partition south values('HYDRABAD','BANGOLORE','CHENNAI'), 
+partition west values('BOMBAY','GOA'))
+Table created.
+
+
+Statement 2
+insert into customers values(101,'sahil','jkfiles','DELHI',20000)
+
+insert into customers values(101,'sahil','jkfiles','DELHI',20000)
+
+insert into customers values(103,'Tejas','sangameshwar','GOA',30000)
+
+insert into customers values(104,'Shubham','lanja','BOMBAY',20000)
+
+insert into customers values(105,'Tanmay','rajapur','CHENNAI',15000)
+
+insert into customers values(107,'Atharva','vizag','HYDRABAD',30000)
+
+insert into customers values(108,'Sai','bangal','KOLKATA',20000)
+1 row(s) inserted.
+
+select * from customers partition(north)
+
+
+CUSTCODE	CUST_NAME	ADDRESS	CITY	BAL
+101	sahil	jkfiles	DELHI	20000
+101	sahil	jkfiles	DELHI	20000
+2 rows selected.
+
+
+
+Statement 3
+select * from customers partition(south)
+
+CUSTCODE	CUST_NAME	ADDRESS	CITY	BAL
+105	Tanmay	rajapur	   CHENNAI	15000
+107	Atharva	vizag	  HYDRABAD	30000
+
+2 rows selected.
+
+
+Statement 4
+select TABLE_NAME, PARTITIONING_TYPE, STATUS from USER_PART_TABLES where TABLE_NAME = 'CUSTOMERS'
+
+TABLE_NAME	PARTITIONING_TYPE	STATUS
+CUSTOMERS	LIST	VALID
+
+
+Statement 5
+select PARTITION_NAME from USER_TAB_PARTITIONS where TABLE_NAME ='CUSTOMERS'
+
+PARTITION_NAME
+EAST
+NORTH
+SOUTH
+WEST
+
+
+Statement 6
+ALTER TABLE customers ADD PARTITION central_India VALUES('BHOPAL','NAGPUR')
+
+Table altered.
+
+select PARTITION_NAME from USER_TAB_PARTITIONS where TABLE_NAME ='CUSTOMERS'
+
+PARTITION_NAME
+CENTRAL_INDIA
+EAST
+NORTH
+SOUTH
+WEST
+
+
+Statement 7
+ALTER TABLE customers 
+	MODIFY PARTITION south 
+	ADD VALUES('KOCHI','MANGALORE')
+
+Table altered.
+
+
+Statement 8
+DELETE from customers where city='CHENNAI'
+
+
+Statement 9
+ALTER TABLE customers MODIFY PARTITION south DROP VALUES('CHENNAI','MANGALORE')
+
+Table altered.
+
+
+Statement 10
+ALTER TABLE customers SPLIT PARTITION west INTO 
+(PARTITION northeast VALUES ('BOMBAY'), PARTITION restofthewest)
+Table altered.
+
+select * from customers partition (northeast)
+
+2 rows selected.
+
+select * from customers partition (restofthewest)
+
+========================================================================================
+
+Statement 1
+
+create table test_record(test_id int, 
+    test_type varchar(40), 
+    patient_name varchar(50), 
+    employee_no int, 
+    labno int, 
+    result varchar(20)) 
+ 
+partition by list(result) 
+(partition p1 values('positive'), 
+    partition p2 values('negative'))
+
+
+insert into test_record values(101,'Covid test','Raju',1,51,'positive')
+
+
+select * from test_record partition(p1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

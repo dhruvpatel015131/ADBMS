@@ -1,0 +1,129 @@
+Statement 1
+create table person( 
+    per_id int primary key, 
+    per_name varchar(20), 
+    per_address varchar(30), 
+    per_gender varchar(10) 
+)
+Table created.
+
+
+Statement 2
+insert into person values(123, 'Ram', 'ratnagiri', 'male')
+1 row(s) inserted.
+
+
+Statement 3
+select * from person
+
+PER_ID	PER_NAME	PER_ADDRESS	PER_GENDER
+123	Ram	ratnagiri	male
+Download CSV
+
+
+Statement 4
+create table mcasem1( 
+    stu_id int primary key, 
+    stu_name varchar(20), 
+    stu_email varchar(40), 
+    stu_bscmarks int, 
+    area_of_interest varchar(30) 
+)
+Table created.
+
+
+Statement 5
+insert into mcasem1 values(777, 'Rohit', 'rohit786@gmail.com', 91,'sports')
+1 row(s) inserted.
+Statement 6
+insert into mcasem1 values(619,'Raj','raj@321.com',95,'swimming')
+1 row(s) inserted.
+Statement 7
+insert into mcasem1 values(555,'Dipak','dipak232@gmail.com',93,'chess')
+1 row(s) inserted.
+Statement 8
+insert into mcasem1 values(765,'Pratik','pratik323@gmail.com',96,'trekking')
+1 row(s) inserted.
+
+
+Statement 9
+select * from mcasem1
+
+STU_ID	STU_NAME	STU_EMAIL	STU_BSCMARKS	AREA_OF_INTEREST
+777	Rohit	rohit786@gmail.com	91	sports
+619	Raj	raj@321.com	95	swimming
+555	Dipak	dipak232@gmail.com	93	chess
+765	Pratik	pratik323@gmail.com	96	trekking
+Download CSV
+4 rows selected.
+
+
+Statement 10
+alter table mcasem1 add age_of_student int
+Table altered.
+
+
+Statement 11
+update mcasem1 set age_of_student=24 where stu_id=777
+1 row(s) updated.
+Statement 12
+update mcasem1 set age_of_student=25 where stu_id=619
+1 row(s) updated.
+Statement 13
+update mcasem1 set age_of_student=25 where stu_id=555
+1 row(s) updated.
+Statement 14
+update mcasem1 set age_of_student=24 where stu_id=765
+1 row(s) updated.
+
+
+Statement 15
+select * from mcasem1
+
+
+STU_ID	STU_NAME	STU_EMAIL	STU_BSCMARKS	AREA_OF_INTEREST	AGE_OF_STUDENT
+777	Rohit	rohit786@gmail.com	91	sports	24
+619	Raj	raj@321.com	95	swimming	25
+555	Dipak	dipak232@gmail.com	93	chess	25
+765	Pratik	pratik323@gmail.com	96	trekking	24
+Download CSV
+4 rows selected.
+
+
+
+Statement 18
+select * from mcasem1 order by stu_bscmarks ASC
+
+
+STU_ID	STU_NAME	STU_EMAIL	STU_BSCMARKS	AREA_OF_INTEREST	AGE_OF_STUDENT
+777	Rohit	rohit786@gmail.com	91	sports	24
+555	Dipak	dipak232@gmail.com	93	chess	25
+619	Raj	raj@321.com	95	swimming	25
+765	Pratik	pratik323@gmail.com	96	trekking	24
+Download CSV
+4 rows selected.
+
+
+
+Statement 20
+select * from mcasem1 order by stu_bscmarks ASC
+
+
+STU_ID	STU_NAME	STU_EMAIL	STU_BSCMARKS	AREA_OF_INTEREST	AGE_OF_STUDENT
+777	Rohit	rohit786@gmail.com	91	sports	24
+555	Dipak	dipak232@gmail.com	93	chess	25
+619	Raj	raj@321.com	95	swimming	25
+765	Pratik	pratik323@gmail.com	96	trekking	24
+Download CSV
+4 rows selected.
+
+
+Statement 21
+select * from mcasem1 order by stu_bscmarks DESC
+
+
+STU_ID	STU_NAME	STU_EMAIL	STU_BSCMARKS	AREA_OF_INTEREST	AGE_OF_STUDENT
+765	Pratik	pratik323@gmail.com	96	trekking	24
+619	Raj	raj@321.com	95	swimming	25
+555	Dipak	dipak232@gmail.com	93	chess	25
+777	Rohit	rohit786@gmail.com	91	sports	24

@@ -1,0 +1,583 @@
+Statement 1
+CREATE TABLE sales (year number(4),product varchar2(10),amt number(10,2)) 
+PARTITION BY RANGE (year) 
+(PARTITION p1 VALUES LESS THAN (1990), 
+PARTITION p2 VALUES LESS THAN (1993), 
+PARTITION p3 VALUES LESS THAN (1996), 
+PARTITION p4 VALUES LESS THAN (1999), 
+PARTITION p5 VALUES LESS THAN (MAXVALUE))
+Table created.
+
+Statement 2
+insert into sales values(1989,'soap',30000)
+
+insert into sales values(1991,'facewash',15000)
+
+insert into sales values(1992,'facewash',15000)
+
+insert into sales values(1992,'soap',20000)
+ row(s) inserted.
+
+
+Statement 3
+select * from sales
+
+4 rows selected.
+
+
+Statement 4
+insert into sales values(1989,'soap',30000)
+
+insert into sales values(1991,'facewash',15000)
+
+insert into sales values(1992,'facewash',15000)
+
+insert into sales values(2000,'soap',20000)
+row(s) inserted.
+
+
+Statement 5
+select * from sales
+
+8 rows selected
+
+
+Statement 6
+select * from sales partition (p5)
+
+YEAR	PRODUCT	AMT
+2000	soap	20000
+Download CSV
+
+
+Statement 7
+insert into sales values(1989,'soap',30000)
+
+insert into sales values(1991,'facewash',15000)
+
+insert into sales values(1992,'facewash',15000)
+
+insert into sales values(2000,'soap',20000)
+
+insert into sales values(1995,'cloth',25000)
+
+insert into sales values(1997,'towels',30000)
+
+insert into sales values(2002,'soap',35000)
+row(s) inserted.
+
+
+Statement 8
+select * from sales
+
+YEAR	PRODUCT	AMT
+1989	soap	30000
+1989	soap	30000
+1989	soap	30000
+1991	facewash	15000
+1992	facewash	15000
+1992	soap	20000
+1991	facewash	15000
+1992	facewash	15000
+1991	facewash	15000
+1992	facewash	15000
+1995	cloth	25000
+1997	towels	30000
+2000	soap	20000
+2002	soap	35000
+2000	soap	20000
+Download CSV
+15 rows selected.
+
+
+Statement 9
+select * from sales partition (p5)
+
+YEAR	PRODUCT	AMT
+2000	soap	20000
+2002	soap	35000
+2000	soap	20000
+Download CSV
+3 rows selected.
+
+
+Statement 10
+select * from sales partition (p4)
+
+
+Statement 11
+select * from sales partition (p3)
+
+==========================================================================================
+
+Statement 12
+create table employee(empid int(10),empname varchar(20),gender varchar(10),age int(4))
+partition by range(age) 
+(partition part1 values less than (20), 
+partition part2 values less than (30), 
+partition part3 values less than (40))
+
+
+Statement 13
+insert into employee values(101,'Ashok','Male',35)
+
+insert into employee values(102,'Preeti','Female',28)
+
+insert into employee values(103,'Indra','Male',19)
+
+insert into employee values(104,'Raj','Male',25)
+
+insert into employee values(101,'Ashok','Male',35)
+
+insert into employee values(102,'Preeti','Female',28)
+
+insert into employee values(103,'Indra','Male',19)
+
+insert into employee values(104,'Raj','Male',25)
+
+insert into employee values(105,'Sahil','Male',33)
+row(s) inserted.
+
+
+Statement 14
+select * from employee
+
+EMPID	EMPNAME	GENDER	AGE
+101	Ashok	Male	35
+102	Preeti	Female	28
+103	Indra	Male	19
+104	Raj	Male	25
+101	Ashok	Male	35
+102	Preeti	Female	28
+103	Indra	Male	19
+104	Raj	Male	25
+105	Sahil	Male	33
+Download CSV
+9 rows selected.
+Statement 46
+select * from employee partition (part1)
+ORA-14501: object is not partitioned
+
+More Details: https://docs.oracle.com/error-help/db/ora-14501
+Statement 47
+partition by range(age) 
+Invalid statement
+Statement 48
+(partition part1 values less than (20), 
+partition part2 values less than (30), 
+partition part3 values less than (40))
+ORA-20001: Query must begin with SELECT or WITH
+
+More Details: https://docs.oracle.com/error-help/db/ora-20001
+Statement 49
+partition by range(age) 
+Invalid statement
+Statement 50
+(partition part1 values less than (20), 
+partition part2 values less than (30), 
+partition part3 values less than (40))
+ORA-20001: Query must begin with SELECT or WITH
+
+More Details: https://docs.oracle.com/error-help/db/ora-20001
+Statement 51
+partition by range(age) 
+Invalid statement
+Statement 52
+(partition part1 values less than (20), 
+partition part2 values less than (30), 
+partition part3 values less than (40))
+ORA-20001: Query must begin with SELECT or WITH
+
+More Details: https://docs.oracle.com/error-help/db/ora-20001
+Statement 53
+create table employee(empid int,empname varchar(20),gender varchar(10),age int) 
+partition by range(age) 
+ 
+(partition part1 values less than (20), 
+partition part2 values less than (30), 
+partition part3 values less than (40))
+ORA-00955: name is already used by an existing object
+
+More Details: https://docs.oracle.com/error-help/db/ora-00955
+Statement 54
+create table employee(empid int,empname varchar(20),gender varchar(10),age int)
+ORA-00955: name is already used by an existing object
+
+More Details: https://docs.oracle.com/error-help/db/ora-00955
+Statement 55
+create table employee(empid int,empname varchar(20),gender varchar(10),age int)
+ORA-00955: name is already used by an existing object
+
+More Details: https://docs.oracle.com/error-help/db/ora-00955
+Statement 56
+insert into employee values(101,'Ashok','Male',35)
+1 row(s) inserted.
+Statement 57
+insert into employee values(102,'Preeti','Female',28)
+1 row(s) inserted.
+Statement 58
+insert into employee values(103,'Indra','Male',19)
+1 row(s) inserted.
+Statement 59
+insert into employee values(104,'Raj','Male',25)
+1 row(s) inserted.
+Statement 60
+insert into employee values(105,'Sahil','Male',33)
+1 row(s) inserted.
+Statement 61
+select * from employee
+EMPID	EMPNAME	GENDER	AGE
+101	Ashok	Male	35
+102	Preeti	Female	28
+103	Indra	Male	19
+104	Raj	Male	25
+105	Sahil	Male	33
+101	Ashok	Male	35
+102	Preeti	Female	28
+103	Indra	Male	19
+104	Raj	Male	25
+101	Ashok	Male	35
+102	Preeti	Female	28
+103	Indra	Male	19
+104	Raj	Male	25
+105	Sahil	Male	33
+Download CSV
+14 rows selected.
+Statement 62
+select * from employee partition (part1)
+ORA-14501: object is not partitioned
+
+More Details: https://docs.oracle.com/error-help/db/ora-14501
+Statement 63
+select * from employee
+EMPID	EMPNAME	GENDER	AGE
+101	Ashok	Male	35
+102	Preeti	Female	28
+103	Indra	Male	19
+104	Raj	Male	25
+105	Sahil	Male	33
+101	Ashok	Male	35
+102	Preeti	Female	28
+103	Indra	Male	19
+104	Raj	Male	25
+101	Ashok	Male	35
+102	Preeti	Female	28
+103	Indra	Male	19
+104	Raj	Male	25
+105	Sahil	Male	33
+Download CSV
+14 rows selected.
+Statement 64
+select * from employee partition (part2)
+ORA-14501: object is not partitioned
+
+More Details: https://docs.oracle.com/error-help/db/ora-14501
+Statement 65
+partition by range(age) 
+Invalid statement
+Statement 66
+(partition part1 values less than (20), 
+partition part2 values less than (30), 
+partition part3 values less than (40))
+ORA-20001: Query must begin with SELECT or WITH
+
+More Details: https://docs.oracle.com/error-help/db/ora-20001
+Statement 67
+partition by range(age) 
+Invalid statement
+Statement 68
+(partition part1 values less than (20), 
+partition part2 values less than (30), 
+partition part3 values less than (40))
+ORA-20001: Query must begin with SELECT or WITH
+
+More Details: https://docs.oracle.com/error-help/db/ora-20001
+Statement 69
+select * from employee
+EMPID	EMPNAME	GENDER	AGE
+101	Ashok	Male	35
+102	Preeti	Female	28
+103	Indra	Male	19
+104	Raj	Male	25
+105	Sahil	Male	33
+101	Ashok	Male	35
+102	Preeti	Female	28
+103	Indra	Male	19
+104	Raj	Male	25
+101	Ashok	Male	35
+102	Preeti	Female	28
+103	Indra	Male	19
+104	Raj	Male	25
+105	Sahil	Male	33
+Download CSV
+14 rows selected.
+Statement 70
+select * from employee partition (part1)
+ORA-14501: object is not partitioned
+
+More Details: https://docs.oracle.com/error-help/db/ora-14501
+Statement 71
+partition by range(age) 
+Invalid statement
+Statement 72
+(partition part1 values less than (20), 
+partition part2 values less than (30), 
+partition part3 values less than (40))
+ORA-20001: Query must begin with SELECT or WITH
+
+More Details: https://docs.oracle.com/error-help/db/ora-20001
+Statement 73
+create table employee(empid int,empname varchar(20),gender varchar(10),age int) 
+partition by range(age) 
+(partition part1 values less than (20), 
+partition part2 values less than (30), 
+partition part3 values less than (40))
+ORA-00955: name is already used by an existing object
+
+More Details: https://docs.oracle.com/error-help/db/ora-00955
+Statement 74
+create table employee1(empid int,empname varchar(20),gender varchar(10),age int) 
+partition by range(age) 
+(partition part1 values less than (20), 
+partition part2 values less than (30), 
+partition part3 values less than (40))
+Table created.
+Statement 75
+insert into employee1 values(101,'Ashok','Male',35)
+1 row(s) inserted.
+Statement 76
+insert into employee1 values(102,'Preeti','Female',28)
+1 row(s) inserted.
+Statement 77
+insert into employee1 values(103,'Indra','Male',19)
+1 row(s) inserted.
+Statement 78
+insert into employee1 values(104,'Raj','Male',25)
+1 row(s) inserted.
+Statement 79
+insert into employee1 values(105,'Sahil','Male',33)
+1 row(s) inserted.
+Statement 80
+select * from employee
+EMPID	EMPNAME	GENDER	AGE
+101	Ashok	Male	35
+102	Preeti	Female	28
+103	Indra	Male	19
+104	Raj	Male	25
+105	Sahil	Male	33
+101	Ashok	Male	35
+102	Preeti	Female	28
+103	Indra	Male	19
+104	Raj	Male	25
+101	Ashok	Male	35
+102	Preeti	Female	28
+103	Indra	Male	19
+104	Raj	Male	25
+105	Sahil	Male	33
+Download CSV
+14 rows selected.
+Statement 81
+select * from employee1 partition (part1)
+EMPID	EMPNAME	GENDER	AGE
+103	Indra	Male	19
+Download CSV
+Statement 82
+select * from employee partition (part2)
+ORA-14501: object is not partitioned
+
+More Details: https://docs.oracle.com/error-help/db/ora-14501
+Statement 83
+select * from employee1 partition (part2)
+EMPID	EMPNAME	GENDER	AGE
+102	Preeti	Female	28
+104	Raj	Male	25
+Download CSV
+2 rows selected.
+Statement 84
+alter table employee1 add partition p4 values less than (50)
+Table altered.
+Statement 85
+insert into employee1 values(101,'Ashok','Male',35)
+1 row(s) inserted.
+Statement 86
+insert into employee1 values(102,'Preeti','Female',28)
+1 row(s) inserted.
+Statement 87
+insert into employee1 values(103,'Indra','Male',19)
+1 row(s) inserted.
+Statement 88
+insert into employee1 values(104,'Raj','Male',25)
+1 row(s) inserted.
+Statement 89
+insert into employee1 values(105,'Sahil','Male',33)
+1 row(s) inserted.
+Statement 90
+insert into employee1 values(106,'Swara','Famale',44)
+1 row(s) inserted.
+Statement 91
+insert into employee1 values(107,'Suraj','Male',49)
+1 row(s) inserted.
+Statement 92
+select * from employee1
+EMPID	EMPNAME	GENDER	AGE
+103	Indra	Male	19
+103	Indra	Male	19
+102	Preeti	Female	28
+104	Raj	Male	25
+102	Preeti	Female	28
+104	Raj	Male	25
+101	Ashok	Male	35
+105	Sahil	Male	33
+101	Ashok	Male	35
+105	Sahil	Male	33
+106	Swara	Famale	44
+107	Suraj	Male	49
+Download CSV
+12 rows selected.
+Statement 93
+select * from employee1 partition(p4)
+EMPID	EMPNAME	GENDER	AGE
+106	Swara	Famale	44
+107	Suraj	Male	49
+Download CSV
+2 rows selected.
+Statement 94
+alter table employee1 add partition part4 values less than (50)
+ORA-14074: partition bound must collate higher than that of the last partition
+
+More Details: https://docs.oracle.com/error-help/db/ora-14074
+Statement 95
+alter table employee1 add partition (MAXVALUE)
+ORA-00902: invalid datatype
+
+More Details: https://docs.oracle.com/error-help/db/ora-00902
+Statement 96
+alter table employee1 add partition part5 values less than(MAXVALUE)
+Table altered.
+Statement 97
+insert into employee1 values(101,'Ashok','Male',35)
+1 row(s) inserted.
+Statement 98
+insert into employee1 values(102,'Preeti','Female',28)
+1 row(s) inserted.
+Statement 99
+insert into employee1 values(103,'Indra','Male',19)
+1 row(s) inserted.
+Statement 100
+insert into employee1 values(104,'Raj','Male',25)
+1 row(s) inserted.
+Statement 101
+insert into employee1 values(105,'Sahil','Male',33)
+1 row(s) inserted.
+Statement 102
+insert into employee1 values(106,'Swara','Famale',44)
+1 row(s) inserted.
+Statement 103
+insert into employee1 values(107,'Suraj','Male',49)
+1 row(s) inserted.
+Statement 104
+insert into employee1 values(108,'Swapnil','Male',55)
+1 row(s) inserted.
+Statement 105
+insert into employee1 values(109,'Rohit','Male',61)
+1 row(s) inserted.
+Statement 106
+select * from employee1
+EMPID	EMPNAME	GENDER	AGE
+103	Indra	Male	19
+103	Indra	Male	19
+103	Indra	Male	19
+102	Preeti	Female	28
+104	Raj	Male	25
+102	Preeti	Female	28
+104	Raj	Male	25
+102	Preeti	Female	28
+104	Raj	Male	25
+101	Ashok	Male	35
+105	Sahil	Male	33
+101	Ashok	Male	35
+105	Sahil	Male	33
+101	Ashok	Male	35
+105	Sahil	Male	33
+106	Swara	Famale	44
+107	Suraj	Male	49
+106	Swara	Famale	44
+107	Suraj	Male	49
+108	Swapnil	Male	55
+109	Rohit	Male	61
+Download CSV
+21 rows selected.
+Statement 107
+select * from employee1 partition(MAXVALUE)
+ORA-02149: Specified partition does not exist
+
+More Details: https://docs.oracle.com/error-help/db/ora-02149
+Statement 108
+select * from employee1 partition(part5)
+EMPID	EMPNAME	GENDER	AGE
+108	Swapnil	Male	55
+109	Rohit	Male	61
+Download CSV
+2 rows selected.
+Statement 109
+alter table employee1 drop partition p4
+Table altered.
+Statement 110
+select * from employee1 partition(part5)
+EMPID	EMPNAME	GENDER	AGE
+108	Swapnil	Male	55
+109	Rohit	Male	61
+Download CSV
+2 rows selected.
+Statement 111
+select * from employee1 partition(p4)
+ORA-02149: Specified partition does not exist
+
+More Details: https://docs.oracle.com/error-help/db/ora-02149
+Statement 112
+select * from employee1 partition(part5)
+EMPID	EMPNAME	GENDER	AGE
+108	Swapnil	Male	55
+109	Rohit	Male	61
+Download CSV
+2 rows selected.
+Statement 113
+insert into employee1 values(101,'Ashok','Male',35)
+1 row(s) inserted.
+Statement 114
+insert into employee1 values(102,'Preeti','Female',28)
+1 row(s) inserted.
+Statement 115
+insert into employee1 values(103,'Indra','Male',19)
+1 row(s) inserted.
+Statement 116
+insert into employee1 values(104,'Raj','Male',25)
+1 row(s) inserted.
+Statement 117
+insert into employee1 values(105,'Sahil','Male',33)
+1 row(s) inserted.
+Statement 118
+insert into employee1 values(106,'Swara','Famale',44)
+1 row(s) inserted.
+Statement 119
+insert into employee1 values(107,'Suraj','Male',49)
+1 row(s) inserted.
+Statement 120
+insert into employee1 values(108,'Swapnil','Male',55)
+1 row(s) inserted.
+Statement 121
+insert into employee1 values(109,'Rohit','Male',61)
+1 row(s) inserted.
+Statement 122
+select * from employee1 partition(part5)
+EMPID	EMPNAME	GENDER	AGE
+106	Swara	Famale	44
+107	Suraj	Male	49
+108	Swapnil	Male	55
+109	Rohit	Male	61
+108	Swapnil	Male	55
+109	Rohit	Male	61
+Download CSV
+6 rows selected.
+Script Update Details
+2024 Oracle · Live SQL 24.1.2, running Oracle Database 19c EE Extreme Perf - 19.17.0.0.0 · Database Documentation · Ask Tom · Dev Gym
